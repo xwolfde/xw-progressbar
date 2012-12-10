@@ -33,8 +33,7 @@ add_action( 'init', 'xw_progressbar_init' );
  * Install or update plugin
  */
 function xw_progressbar_install() {
-	// Get a fresh blacklist
-	xw_progressbar_getdata();
+	
 }
 
 /*
@@ -101,9 +100,7 @@ function xw_progressbar_create($data,$attr) {
  * Get Data by URL
  */
 function xw_progressbar_getdata($url = XW_PROGRESSBAR_URL) {       
-  //  $cacheddata = get_option("xw_progressbar_data");
-  //  $lastcheck = get_option("xw_progressbar_lastcheck");    
- 
+  
       $data =  get_option("xw_progressbar_data");
       $cacheddata = $data["$url"]['data'];
       $lastcheck = $data["$url"]['time'];
@@ -122,8 +119,7 @@ function xw_progressbar_getdata($url = XW_PROGRESSBAR_URL) {
                     $data["$url"]['data'] =  $balken;      
                     $data["$url"]['time'] =  time(); 
                     update_option( "xw_progressbar_data", $data );
-                   // update_option( "xw_progressbar_data", $cacheddata );                    
-                   //  update_option( "xw_progressbar_lastcheck", $lastcheck ); 
+
                 } 
         endif;
 
