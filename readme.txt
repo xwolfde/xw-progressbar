@@ -12,9 +12,24 @@ Tested up to: 3.5
 
 == Description ==
 
-Anzeige von einem oder mehreren Progress Bars in einem Widget oder in
-Artikeln.
-Die Balken werden aus einer CSV-Datei aus einer entfernen Quelle eingelesen.
+Displays one or more progress bars.
+All progress bars get data by an external source (URL) and will be automatically 
+updated.
+
+Syntax for the data-file on the URL is a character seperated file:
+Titel; Progressvalue; Maxvalue
+
+E.g.:
+
+    Projekt 1 Ready State; 20; 100
+    Projekt 2 Ready State; 44; 100
+
+You are not based on a maximum number:
+
+    PC-Founding; 45,33; 2300
+    Server-Founding; 2213; 34000
+
+You can also use floating numbers in the value field.
 
 
 == Installation ==
