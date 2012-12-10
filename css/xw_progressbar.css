@@ -1,0 +1,31 @@
+/* 
+    Document   : xw_progressbar.css
+    Created on : 10.12.2012, 15:36:56
+    Author     : Manager
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+ #xw-progressbar h3 {    font-family: Arial,Times New Roman;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 5px;     text-align: left;
+ }
+ #xw-progressbar {width: 100%; 
+          margin: 0; padding: 0;
+          text-align: right; 
+ } 
+ #xw-progressbar progress { width: 100% }
+ #xw-progressbar div { width: 100%;  } 
+ #xw-progressbar div.gesamt{ background: rgba(0,0,0,0.1);  }
+ #xw-progressbar progress {background-color: rgba(0,0,0,0.1); height: 20px; border-width: 1px;}
+ #xw-progressbar progress::-webkit-progress-bar-value, 
+ #xw-progressbar progress::-webkit-progress-value, 
+ #xw-progressbar progress ::-moz-progress-bar {
+        background-color:#2d7dc5;
+ }                        
+ #xw-progressbar div span {  font-weight: bold;
+    margin-right: 10px;
+    position: relative;
+    top: -20px;
+ }
