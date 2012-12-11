@@ -53,8 +53,8 @@ function xw_progressbar_create($data,$attr) {
         return "No Data";
     }
     if (is_array($attr)) {
-        if (isset($attr['sum'])) {
-            $display_sum = $attr['sum'];
+        if (isset($attr['total'])) {
+            $display_sum = $attr['total'];
         } 
         if (isset($attr['color'])) {
            $display_barcolor = $attr['color'];
