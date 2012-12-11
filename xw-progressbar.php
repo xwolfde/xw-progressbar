@@ -91,13 +91,15 @@ function xw_progressbar_create($data,$attr) {
         foreach ($data as $value)  {                       
             $value = trim($value);
             if (strlen($value) > 1) { 
+                
                 $parts = mb_split(";", $value);
+                
                 $parts[0] = strip_tags($parts[0]);
                 $result .=  "<h3>$parts[0]</h3>";
-                $parts[1] = floatval(trim($parts[1]));
-                $parts[2] = intval(trim($parts[2]));
+                $parts[1] = floatval($parts[1]);
+                $parts[2] = intval($parts[2]);
+                
                 $number =  intval($parts[1]);
-
                 $summe = $summe + $parts[2];
                 $wert = $wert + $parts[1];
                         
@@ -112,7 +114,7 @@ function xw_progressbar_create($data,$attr) {
 
                 } else {
                     if ($parts[2]==0) $parts[2]=1;                    
-                    $percent = intval($parts[1] * 100 / $parts[2]);
+                    $percent = intval( ($parts[1] * 100) / $parts[2]);
                     
                     $result .= "<div class=\"meter";
                     if (isset($display_barcolor)) {
@@ -124,7 +126,7 @@ function xw_progressbar_create($data,$attr) {
                     $result .= "\" ></span>";
                     $result .=  "</div>";
                     if ($displaynumber==1) {
-                        $result .=  "<span class=\"number\">$wert / $summe $unit</span>";
+                        $result .=  "<span class=\"number\">$parts[1] / $parts[2] $unit</span>";
                     }    
                 }
                 
