@@ -16,6 +16,24 @@ Displays one or more progress bars.
 All progress bars get data by an external source (URL) and will be automatically 
 updated.
 
+=== Usage ===
+1. Use as widget
+   Simply add the progress bar widget to the sidebar you want to display it.
+   Within the widget you can set a title and an URL.
+
+2. Use as shortcode within articles and pages
+   Add a shortcode like this:
+
+   [progressbar url="http://some/url/data.csv"]
+
+   Additional attributes:
+   * color 
+   * width 
+   * total (0/1)
+  
+
+
+=== Syntax for data sources ===
 Syntax for the data-file on the URL is a character seperated file:
 Titel; Progressvalue; Maxvalue
 
@@ -30,6 +48,9 @@ You are not based on a maximum number:
     Server-Founding; 2213; 34000
 
 You can also use floating numbers in the value field.
+
+
+
 
 
 == Installation ==
