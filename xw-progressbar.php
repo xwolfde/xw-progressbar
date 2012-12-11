@@ -17,8 +17,9 @@ License: GPL2
 define("XW_PROGRESSBAR_URL", "http://blog.tokenbus.de/stand.txt");
 define("XW_PROGRESSBAR_CACHETIME", 30*60);
 define("XW_PROGRESSBAR_SUM", 1);
-define("XW_PROGRESSBAR_HTML5", 1);
-define("XW_PROGRESSBAR_COLOR", '#2d7dc5');
+define("XW_PROGRESSBAR_HTML5", 0);
+define("XW_PROGRESSBAR_DISPLAYNUMBER", 1);
+define("XW_PROGRESSBAR_COLOR", 'blue');
 
 
 function xw_progressbar_init() {
@@ -56,12 +57,26 @@ function xw_progressbar_create($data,$attr) {
             $display_sum = $attr['sum'];
         } 
         if (isset($attr['color'])) {
-            $display_barcolor = $attr['color'];
+           $display_barcolor = $attr['color'];
         } 
+        if (isset($attr['numbers'])) {
+           $displaynumber = $attr['numbers'];
+        } 
+         if (isset($attr['unitstr'])) {
+           $unit = $attr['unitstr'];
+        } else {
+            $unit = '';
+        }
+         if (isset($attr['html5'])) {
+            $htmltyp = 1;
+        } else {
+            $htmltyp = 0;
+        }
     }   
     if (!isset($display_sum)) $display_sum = XW_PROGRESSBAR_SUM;
     if (!isset($display_barcolor)) $display_barcolor = XW_PROGRESSBAR_COLOR;
-    
+    if (!isset($htmltyp)) $htmltyp = XW_PROGRESSBAR_HTML5;
+    if (!isset($displaynumber)) $displaynumber = XW_PROGRESSBAR_DISPLAYNUMBER;    
     
     $result = '';
     $result .=  "<div class=\"xw-progressbar\"";   
@@ -85,23 +100,61 @@ function xw_progressbar_create($data,$attr) {
 
                 $summe = $summe + $parts[2];
                 $wert = $wert + $parts[1];
+                        
+               
+                if ($htmltyp==1) {
+                     $result .=  "<div>";
+                    $result .= "<progress value=\"$number\" max=\"$parts[2]\"></progress>";
+                    if ($displaynumber==1) {
+                        $result .=  "<span class=\"number\">$parts[1] / $parts[2] $unit</span>";
+                    }
+                    $result .=  "</div>";    
 
-                $result .=  "<div><progress value=\"$number\" max=\"$parts[2]\"";
-                if (isset($display_barcolor)) {
-                    $result .= " background-color=\"$display_barcolor\"";
+                } else {
+                    if ($parts[2]==0) $parts[2]=1;                    
+                    $percent = intval($parts[1] * 100 / $parts[2]);
+                    
+                    $result .= "<div class=\"meter";
+                    if (isset($display_barcolor)) {
+                       $result .= " $display_barcolor";
+                    }
+                    $result .= "\">";
+                    $result .= "<span style=\"width: $percent%";
+        
+                    $result .= "\" ></span>";
+                    $result .=  "</div>";
+                    if ($displaynumber==1) {
+                        $result .=  "<span class=\"number\">$wert / $summe $unit</span>";
+                    }    
                 }
-                $result .= "></progress>";
-                $result .=  "<span>$parts[1] / $parts[2]</span>";
-                $result .=  "</div>";
+                
             }                                                                                            
         }
         if ($display_sum ==1) {
             $wertint = intval($wert);
+            
             $result .=  "<div class=\"gesamt\">";
             $result .=  "<h3>".__( 'Total', 'xw_progressbar' )."</h3>";
-            $result .=  "<div><progress value=\"$wertint\" max=\"$summe\"></progress>"; 
-            $result .=  "<span>$wert / $summe</span>";
-            $result .=  "</div>";
+            if ($htmltyp==1) {
+                $result .=  "<div><progress value=\"$wertint\" max=\"$summe\"></progress>"; 
+                if ($displaynumber==1) {
+                    $result .=  "<span class=\"number\">$wert / $summem $unit</span>";
+                }
+                $result .=  "</div>";
+            } else {
+                $percent = intval($wert * 100 / $summe);
+                $result .= "<div class=\"meter";
+                    if (isset($display_barcolor)) {
+                       $result .= " $display_barcolor";
+                    }
+                    $result .= "\">";
+                $result .= "<span style=\"width: $percent%";               
+                $result .= "\" ></span>";
+                $result .=  "</div>";
+                if ($displaynumber==1) {
+                    $result .=  "<span class=\"number\">$wert / $summe $unit</span>"; 
+                }    
+            }
             $result .=  "</div>";
         }
     $result .=  "</div>";
@@ -147,6 +200,9 @@ function xw_progressbar_shortcode ($atts ) {
 		'url' => XW_PROGRESSBAR_URL,	// default url
 		'color' => XW_PROGRESSBAR_COLOR,// Default color
 		'total' => XW_PROGRESSBAR_SUM,	// Show total
+                'html5' => XW_PROGRESSBAR_HTML5, // use HTML5 progress bar 
+                'numbers' => XW_PROGRESSBAR_DISPLAYNUMBER, // Show numbers  
+                'unitstr' => '',	// Optional Unit-String
                 'width'  => '',
         ), $atts ) );
         
@@ -212,6 +268,8 @@ class xw_progressbar_Widget extends WP_Widget {
 		$instance = array();
 		$instance['title'] = strip_tags( $new_instance['title'] );
                 $instance['url'] = strip_tags( $new_instance['url'] );
+                $instance['color'] = strip_tags( $new_instance['color'] );
+                $instance['unitstr'] = strip_tags( $new_instance['unitstr'] );
 		return $instance;
 	}
 
@@ -231,6 +289,11 @@ class xw_progressbar_Widget extends WP_Widget {
 		} else {
 			$url = '';
 		}
+                if ( isset( $instance[ 'unitstr' ] ) ) {
+			$unitstr = $instance[ 'unitstr' ];
+		} else {
+			$unitstr = '';
+		}
                 ?>
                  <p>
                 <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'xw_progressbar' ); ?></label> 
@@ -239,6 +302,10 @@ class xw_progressbar_Widget extends WP_Widget {
                 <p>
                 <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'xw_progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $url ); ?>" />
+                </p>
+                <p>
+                <label for="<?php echo $this->get_field_id( 'unitstr' ); ?>"><?php _e( 'Units:', 'xw_progressbar' ); ?></label> 
+                <input class="widefat" id="<?php echo $this->get_field_id( 'unitstr' ); ?>" name="<?php echo $this->get_field_name( 'unitstr' ); ?>" type="text" value="<?php echo esc_attr( $unitstr ); ?>" />
                 </p>
                  <?php               
 	}
