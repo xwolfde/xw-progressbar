@@ -17,6 +17,8 @@ License: GPL2
 define("XW_PROGRESSBAR_URL", "http://blog.tokenbus.de/stand.txt");
 define("XW_PROGRESSBAR_CACHETIME", 30*60);
 define("XW_PROGRESSBAR_SUM", 1);
+define("XW_PROGRESSBAR_HTML5", 1);
+define("XW_PROGRESSBAR_COLOR", '#2d7dc5');
 
 
 function xw_progressbar_init() {
@@ -25,6 +27,7 @@ function xw_progressbar_init() {
 		wp_register_style( 'xw_progressbar_css', $xw_progressbar_path . 'css/xw_progressbar.css' );
 		wp_enqueue_style( 'xw_progressbar_css' );
 	}
+        load_plugin_textdomain('xw_progressbar', false, $xw_progressbar_path . '/languages' );
 }
 add_action( 'init', 'xw_progressbar_init' );
 
@@ -35,7 +38,12 @@ add_action( 'init', 'xw_progressbar_init' );
 function xw_progressbar_install() {
 	
 }
-
+/**
+ * deactivate plugin
+ */
+function xw_progressbar_uninstall() {
+	delete_option( "xw_progressbar_data" );
+}
 /*
  * Create progress bars by array
  */
@@ -47,15 +55,22 @@ function xw_progressbar_create($data,$attr) {
         if (isset($attr['sum'])) {
             $display_sum = $attr['sum'];
         } 
-        if (isset($attr['barcolor'])) {
-            $display_barcolor = $attr['barcolor'];
+        if (isset($attr['color'])) {
+            $display_barcolor = $attr['color'];
         } 
     }   
     if (!isset($display_sum)) $display_sum = XW_PROGRESSBAR_SUM;
+    if (!isset($display_barcolor)) $display_barcolor = XW_PROGRESSBAR_COLOR;
     
     
     $result = '';
-    $result .=  "<div id=\"xw-progressbar\">";   
+    $result .=  "<div class=\"xw-progressbar\"";   
+  
+    
+    if ((isset($attr['width'])) && (intval($attr['width'])>0)) {
+        $result .=  " style=\"width: ".$attr['width']."\"";
+    }
+    $result .=  ">";
         $summe = 0;
         $wert = 0;
         foreach ($data as $value)  {                       
@@ -73,9 +88,9 @@ function xw_progressbar_create($data,$attr) {
 
                 $result .=  "<div><progress value=\"$number\" max=\"$parts[2]\"";
                 if (isset($display_barcolor)) {
-                    $result .= " background-color: \"$display_barcolor\"";
+                    $result .= " background-color=\"$display_barcolor\"";
                 }
-                $result .= "></progress><br>";
+                $result .= "></progress>";
                 $result .=  "<span>$parts[1] / $parts[2]</span>";
                 $result .=  "</div>";
             }                                                                                            
@@ -84,7 +99,7 @@ function xw_progressbar_create($data,$attr) {
             $wertint = intval($wert);
             $result .=  "<div class=\"gesamt\">";
             $result .=  "<h3>".__( 'Total', 'xw_progressbar' )."</h3>";
-            $result .=  "<div><progress value=\"$wertint\" max=\"$summe\"></progress><br>";
+            $result .=  "<div><progress value=\"$wertint\" max=\"$summe\"></progress>"; 
             $result .=  "<span>$wert / $summe</span>";
             $result .=  "</div>";
             $result .=  "</div>";
@@ -92,9 +107,6 @@ function xw_progressbar_create($data,$attr) {
     $result .=  "</div>";
     return $result;
 }
-
-
-
 
 /*
  * Get Data by URL
@@ -127,6 +139,25 @@ function xw_progressbar_getdata($url = XW_PROGRESSBAR_URL) {
     return $cacheddata;
 }
 
+/* 
+ * Define Shortcodes
+ */
+function xw_progressbar_shortcode ($atts ) {
+	extract( shortcode_atts( array(
+		'url' => XW_PROGRESSBAR_URL,	// default url
+		'color' => XW_PROGRESSBAR_COLOR,// Default color
+		'total' => XW_PROGRESSBAR_SUM,	// Show total
+                'width'  => '',
+        ), $atts ) );
+        
+       
+	 $balken = xw_progressbar_getdata($atts['url']);
+         $html = xw_progressbar_create($balken,$atts); 
+        
+         return $html;
+        
+}
+add_shortcode('progressbar','xw_progressbar_shortcode');
 
 /**
  * Adds xw_progressbar_Widget widget.
@@ -225,3 +256,4 @@ add_action( 'widgets_init', create_function( '', 'register_widget( "xw_progressb
  */
 
 register_activation_hook(__FILE__, 'xw_progressbar_install');
+register_deactivation_hook(__FILE__, 'xw_progressbar_uninstall');
