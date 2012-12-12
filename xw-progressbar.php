@@ -31,7 +31,7 @@ function xw_progressbar_init() {
 		wp_register_style( 'xw_progressbar_css', $xw_progressbar_path . 'css/xw_progressbar.css' );
 		wp_enqueue_style( 'xw_progressbar_css' );
 	}
-        load_plugin_textdomain('xw_progressbar', false, $xw_progressbar_path . '/languages' );
+        load_plugin_textdomain('xw-progressbar', '', dirname(plugin_basename(__FILE__)) . '/lang' ); 
 }
 add_action( 'init', 'xw_progressbar_init' );
 
@@ -145,11 +145,11 @@ function xw_progressbar_create($data,$attr) {
             $wertint = intval($wert);
             
             $result .=  "<div class=\"gesamt\">";
-            $result .=  "<h3>".__( 'Total', 'xw_progressbar' )."</h3>";
+            $result .=  "<h3>".__( 'Total', 'xw-progressbar' )."</h3>";
             if ($htmltyp==1) {
                 $result .=  "<div><progress value=\"$wertint\" max=\"$summe\"></progress>"; 
                 if ($displaynumber==1) {
-                    $result .=  "<span class=\"number\">$wert / $summem $unit</span>";
+                    $result .=  "<span class=\"number\">$wert / $summe $unit</span>";
                 }
                 $result .=  "</div>";
             } else {
@@ -237,8 +237,8 @@ class xw_progressbar_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 	 		'xw_progressbar_Widget', // Base ID
-                        __( 'Progress Bar', 'xw_progressbar' ),
-			array( 'description' => __( 'Displays one or more progress bars defined by an URL', 'xw_progressbar' ), ) // Args
+                        __( 'Progress Bar', 'xw-progressbar' ),
+			array( 'description' => __( 'Displays one or more progress bars defined by an URL', 'xw-progressbar' ), ) // Args
 		);
 	}
 
@@ -298,7 +298,7 @@ class xw_progressbar_Widget extends WP_Widget {
 		if ( isset( $instance[ 'title' ] ) ) {
 			$title = $instance[ 'title' ];
 		} else {
-			$title = __( 'Progress Bar', 'xw_progressbar' );
+			$title = __( 'Progress Bar', 'xw-progressbar' );
 		}
                 if ( isset( $instance[ 'url' ] ) ) {
 			$url = $instance[ 'url' ];
@@ -333,17 +333,17 @@ class xw_progressbar_Widget extends WP_Widget {
                 }
                 ?>
                  <p>
-                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'xw_progressbar' ); ?></label> 
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'xw-progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
                 </p>
                 <p>
-                <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'xw_progressbar' ); ?></label> 
+                <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'xw-progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $url ); ?>" />
                 </p>
                
-                <h5>Options</h5>
+                <h5><?php _e( 'Optional Settings', 'xw-progressbar' ); ?></h5>
                  <p>
-                <label for="<?php echo $this->get_field_id( 'unitstr' ); ?>"><?php _e( 'Text for Unit-Numbers:', 'xw_progressbar' ); ?></label> 
+                <label for="<?php echo $this->get_field_id( 'unitstr' ); ?>"><?php _e( 'Text for Unit-Numbers:', 'xw-progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'unitstr' ); ?>" name="<?php echo $this->get_field_name( 'unitstr' ); ?>" type="text" value="<?php echo esc_attr( $unitstr ); ?>" />
                 </p>
                 <p>
@@ -351,25 +351,25 @@ class xw_progressbar_Widget extends WP_Widget {
                     <input id="<?php echo $this->get_field_id( 'rounded' ); ?>" 
                             name="<?php echo $this->get_field_name( 'rounded' ); ?>" 
                             type="checkbox" value="1" <?php echo checked($rounded,1,false ); ?> />
-                    <label for="<?php echo $this->get_field_id( 'rounded' ); ?>"><?php _e( 'Use rounded corners', 'xw_progressbar' ); ?></label> 
+                    <label for="<?php echo $this->get_field_id( 'rounded' ); ?>"><?php _e( 'Use rounded corners', 'xw-progressbar' ); ?></label> 
                 </p>
                 <p>        
                      <input id="<?php echo $this->get_field_id( 'total' ); ?>" 
                             name="<?php echo $this->get_field_name( 'total' ); ?>" 
                             type="checkbox" value="1" <?php echo checked($total,1,false ); ?> />
-                    <label for="<?php echo $this->get_field_id( 'total' ); ?>"><?php _e( 'Show total bar', 'xw_progressbar' ); ?></label> 
+                    <label for="<?php echo $this->get_field_id( 'total' ); ?>"><?php _e( 'Show total bar', 'xw-progressbar' ); ?></label> 
                 </p>
                  <p>        
                      <input id="<?php echo $this->get_field_id( 'numbers' ); ?>" 
                             name="<?php echo $this->get_field_name( 'numbers' ); ?>" 
                             type="checkbox" value="1" <?php echo checked($numbers,1,false ); ?> />
-                    <label for="<?php echo $this->get_field_id( 'numbers' ); ?>"><?php _e( 'Show numbers', 'xw_progressbar' ); ?></label> 
+                    <label for="<?php echo $this->get_field_id( 'numbers' ); ?>"><?php _e( 'Show numbers', 'xw-progressbar' ); ?></label> 
                 </p>
                 <p>        
                      <input id="<?php echo $this->get_field_id( 'html5' ); ?>" 
                             name="<?php echo $this->get_field_name( 'html5' ); ?>" 
                             type="checkbox" value="1" <?php echo checked($html5,1,false ); ?> />
-                    <label for="<?php echo $this->get_field_id( 'html5' ); ?>"><?php _e( 'Use HTML5 progress bars', 'xw_progressbar' ); ?></label> 
+                    <label for="<?php echo $this->get_field_id( 'html5' ); ?>"><?php _e( 'Use HTML5 progress bars', 'xw-progressbar' ); ?></label> 
                 </p>
                 
                 <?php 
@@ -389,7 +389,7 @@ class xw_progressbar_Widget extends WP_Widget {
                 }  
                 echo "</select>\n";                                   
                 echo "\t\t\t";
-                echo "<label for=\"".$this->get_field_name( 'color' )."\">".__( 'Color for bars', 'xw_progressbar' )."</label>\n"; 
+                echo "<label for=\"".$this->get_field_name( 'color' )."\">".__( 'Color for bars', 'xw-progressbar' )."</label>\n"; 
                 
                 
 	}

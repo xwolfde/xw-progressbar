@@ -59,6 +59,6 @@ You can also use floating numbers in the value field.
 
 == Installation ==
 
-1. ZIP-Datei entpacken
-2. Dateien nach `/wp-content/plugins/` hochladen
-3. Das Plugin im Admin-Bereich von WordPress aktivieren
+1. Download ZIP-file
+2. Upload to your blog into directory "/wp-content/plugins/"
+3. Activate within the plugin-section of wordpress backend

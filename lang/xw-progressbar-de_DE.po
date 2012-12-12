@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Wolfgang Wiese <pirat@xwolf.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+#. Text in function
+#: xw-progressbar.php:1
+msgid "Displays one or more progress bars defined by an URL"
+msgstr ""
+"Anzeige von einem oder mehreren Fortschrittsbalken auf Basis einer externen "
+"Datenquelle"
+
+#. Text in function
+#: xw-progressbar.php:1
+msgid "Progress Bar"
+msgstr "Fortschrittsbalken"
+
+#. Text in echo
+#: xw-progressbar.php:366
+msgid "Show numbers"
+msgstr "Zeige Werte"
+
+#. Text in echo
+#: xw-progressbar.php:360
+msgid "Show total bar"
+msgstr "Zeige Summe"
+
+#. Text in echo
+#: xw-progressbar.php:346
+msgid "Text for Unit-Numbers:"
+msgstr "Anzeigetext für Einheiten"
+
+#. Text in echo
+#: xw-progressbar.php:336
+msgid "Title:"
+msgstr "Titel"
+
+#. Text in function
+#: xw-progressbar.php:1
+msgid "Total"
+msgstr "Summe"
+
+#. Text in echo
+#: xw-progressbar.php:340
+msgid "URL:"
+msgstr "URL:"
+
+#. Text in echo
+#: xw-progressbar.php:344
+msgid "Optional Settings"
+msgstr "Optionale Einstellungen"
+
+#. Text in echo
+#: xw-progressbar.php:372
+msgid "Use HTML5 progress bars"
+msgstr "Verwende HTML5 Progress Tag"
+
+#. Text in echo
+#: xw-progressbar.php:354
+msgid "Use rounded corners"
+msgstr "Runde Ecken"
