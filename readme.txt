@@ -6,7 +6,7 @@ Version: 1.0.1
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
-Tags: politics, campaign
+Tags: statictics, progress, data
 Requires at least: 3.3
 Tested up to: 3.5
 
