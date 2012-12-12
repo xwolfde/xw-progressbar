@@ -4,7 +4,7 @@ Plugin Name: xwolf Progress Bar
 Plugin URI: http://piratenkleider.xwolf.de/plugins/
 Description: Displays a textbox with progressbars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
-Version: 1.0
+Version: 1.1
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
@@ -21,7 +21,7 @@ define("XW_PROGRESSBAR_HTML5", 0);
 define("XW_PROGRESSBAR_DISPLAYNUMBER", 1);
 define("XW_PROGRESSBAR_COLOR", 'green');
 define("XW_PROGRESSBAR_ROUNDED", 1);
-
+define("XW_PROGRESSBAR_NUMBERBAR",1);
 
 
 
@@ -65,6 +65,9 @@ function xw_progressbar_create($data,$attr) {
         if (isset($attr['numbers'])) {
            $displaynumber = intval($attr['numbers']);
         } 
+        if (isset($attr['numberbar'])) {
+           $numberbar = intval($attr['numberbar']);
+        }
          if (isset($attr['unitstr'])) {
            $unit = $attr['unitstr'];
         } else {
@@ -73,7 +76,7 @@ function xw_progressbar_create($data,$attr) {
          if (isset($attr['html5'])) {
             $htmltyp = intval($attr['html5']);       
         }
-         if (isset($attr['rounded'])) {
+        if (isset($attr['rounded'])) {
             $rounded = intval($attr['rounded']);       
         }
     }   
@@ -82,12 +85,19 @@ function xw_progressbar_create($data,$attr) {
     if (!isset($htmltyp)) $htmltyp = XW_PROGRESSBAR_HTML5;
     if (!isset($displaynumber)) $displaynumber = XW_PROGRESSBAR_DISPLAYNUMBER;    
     if (!isset($rounded)) $rounded = XW_PROGRESSBAR_ROUNDED;    
+    if (!isset($numberbar)) $numberbar = XW_PROGRESSBAR_NUMBERBAR;
+    
+    if ($displaynumber==0) {$numberbar =0;}
+    
     
     $result = '';
     $result .=  "<div class=\"xw-progressbar";   
   
     if ((isset($rounded)) && ($rounded==1)) {
         $result .=  " rounded";
+    }
+    if ((isset($numberbar)) && ($numberbar==1)) {
+        $result .=  " numberbar";
     }
     $result .=  "\"";   
     if ((isset($attr['width'])) && (intval($attr['width'])>0)) {
@@ -216,6 +226,7 @@ function xw_progressbar_shortcode ($atts ) {
                 'unitstr' => '',	// Optional Unit-String
                 'width'  => '',
                 'rounded' => XW_PROGRESSBAR_ROUNDED, // Show round corners and bars
+                'numberbar' => XW_PROGRESSBAR_NUMBERBAR
         ), $atts ) );
         
        
@@ -285,6 +296,7 @@ class xw_progressbar_Widget extends WP_Widget {
                 $instance['rounded'] = strip_tags( $new_instance['rounded'] );
                 $instance['total'] = strip_tags( $new_instance['total'] );
                 $instance['numbers'] = strip_tags( $new_instance['numbers'] );
+                $instance['numberbar'] = strip_tags( $new_instance['numberbar'] );
                 $instance['html5'] = strip_tags( $new_instance['html5'] );
 		return $instance;
 	}
@@ -331,6 +343,11 @@ class xw_progressbar_Widget extends WP_Widget {
 		} else {
                     $numbers = XW_PROGRESSBAR_DISPLAYNUMBER;
                 }
+                 if ( isset( $instance[ 'numberbar' ] ) ) {
+			$numberbar = $instance[ 'numberbar' ];
+		} else {
+                    $numberbar = XW_PROGRESSBAR_NUMBERBAR;
+                }
                 ?>
                  <p>
                 <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'xw-progressbar' ); ?></label> 
@@ -364,6 +381,12 @@ class xw_progressbar_Widget extends WP_Widget {
                             name="<?php echo $this->get_field_name( 'numbers' ); ?>" 
                             type="checkbox" value="1" <?php echo checked($numbers,1,false ); ?> />
                     <label for="<?php echo $this->get_field_id( 'numbers' ); ?>"><?php _e( 'Show numbers', 'xw-progressbar' ); ?></label> 
+                </p>
+                <p>        
+                     <input id="<?php echo $this->get_field_id( 'numberbar' ); ?>" 
+                            name="<?php echo $this->get_field_name( 'numberbar' ); ?>" 
+                            type="checkbox" value="1" <?php echo checked($numberbar,1,false ); ?> />
+                    <label for="<?php echo $this->get_field_id( 'numberbar' ); ?>"><?php _e( 'No break between bars and numbers', 'xw-progressbar' ); ?></label> 
                 </p>
                 <p>        
                      <input id="<?php echo $this->get_field_id( 'html5' ); ?>" 

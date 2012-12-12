@@ -20,6 +20,8 @@
      -ms-border-radius: 5px;
      border-radius: 5px;
  }
+
+ 
  .xw-progressbar h3 {    
      font-family: Arial,Times New Roman;
     font-size: 1em;
@@ -29,8 +31,13 @@
  }
 
  .xw-progressbar progress { width: 100%; line-height: 0.9em; }
+ .numberbar progress {
+     float: left;
+     width:  75%;
+     min-width: 100px;
+ }
  .xw-progressbar div { width: 100%;  } 
- .xw-progressbar div.gesamt{ 
+ .xw-progressbar div.gesamt { 
      padding-top: 10px;
      background: rgba(0,0,0,0.1);
  }
@@ -39,6 +46,9 @@
 	-webkit-border-radius: 3px;
         -ms-border-radius: 3px;
 	border-radius: 3px;   
+ }
+ .xw-progressbar div.gesamt span.number {
+     font-weight: bold;
  }
 /*
 .xw-progressbar progress { background-color: rgba(255,255,255,0.3); height: 20px; border-width: 1px;}
@@ -54,7 +64,11 @@
     font-style: italic;
     border: none;
  }
- 
+ .numberbar span.number {  
+     clear: left;
+     width: 25%;
+     min-width: 50px;
+ }
  /* 
  * CSS Code adopted by CSS-Tricks, http://css-tricks.com/css3-progress-bars/
  */
@@ -75,6 +89,11 @@
         -ms-border-radius: 7px;
 	border-radius: 7px;
  }    
+ .numberbar .meter {     
+     float: left;
+     width: 75%;
+     min-width: 100px;
+ }
   .xw-progressbar .meter > span {
 	display: block;
 	height: 100%;

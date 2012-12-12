@@ -2,7 +2,7 @@
 Plugin URI: https://github.com/xwolfde/xw-progressbar
 Description: Displays a textbox with progressbars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
-Version: 1.0.1
+Version: 1.1
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
@@ -33,6 +33,7 @@ updated.
     * rounded - make bars and box with rounded borders
     * total - show total numbers
     * numbers - show numbers of each bar
+    * numberbar - no break between bar and numbers
     * html5 - use <progress>-tag instead of <div><span>..
     
 
