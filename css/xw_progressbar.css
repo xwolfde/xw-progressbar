@@ -12,9 +12,14 @@
         text-align: right; 
         border: 1px solid rgba(0,0,0,0.1);
         font-size: 0.9em;
-         background: rgba(0,0,0,0.05);
+        background: rgba(0,0,0,0.05);
  } 
- 
+ div.rounded {
+     -moz-border-radius: 5px;
+     -webkit-border-radius: 5px;
+     -ms-border-radius: 5px;
+     border-radius: 5px;
+ }
  .xw-progressbar h3 {    
      font-family: Arial,Times New Roman;
     font-size: 1em;
@@ -29,12 +34,20 @@
      padding-top: 10px;
      background: rgba(0,0,0,0.1);
  }
- .xw-progressbar progress { background-color: rgba(255,255,255,0.3); height: 20px; border-width: 1px;}
+ .rounded div.gesamt{ 
+       	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+        -ms-border-radius: 3px;
+	border-radius: 3px;   
+ }
+/*
+.xw-progressbar progress { background-color: rgba(255,255,255,0.3); height: 20px; border-width: 1px;}
  .xw-progressbar progress::-webkit-progress-bar-value, 
  .xw-progressbar progress::-webkit-progress-value, 
  .xw-progressbar progress ::-moz-progress-bar {
         background-color:#2d7dc5;     
  }                        
+*/
  .xw-progressbar span.number {  
     margin-right: 0px;
     font-size: 0.9em;
@@ -43,37 +56,28 @@
  }
  
  /* 
- * CSS Code by CSS-Tricks, http://css-tricks.com/css3-progress-bars/
+ * CSS Code adopted by CSS-Tricks, http://css-tricks.com/css3-progress-bars/
  */
  
  .xw-progressbar .meter {
      height: 18px;  /* Can be anything */
 	position: relative;
 	background: rgba(0,0,0,0.1);
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
-	border-radius: 7px;
         padding: 0;
+        -ms-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
 	-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
 	-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
 	box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
  }
+ .rounded .meter {
+     	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+        -ms-border-radius: 7px;
+	border-radius: 7px;
+ }    
   .xw-progressbar .meter > span {
 	display: block;
 	height: 100%;
-	   -webkit-border-top-right-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
-	       -moz-border-radius-topright: 7px;
-	    -moz-border-radius-bottomright: 7px;
-	           border-top-right-radius: 7px;
-	        border-bottom-right-radius: 7px;
-	    -webkit-border-top-left-radius: 7px;
-	 -webkit-border-bottom-left-radius: 7px;
-	        -moz-border-radius-topleft: 7px;
-	     -moz-border-radius-bottomleft: 7px;
-	            border-top-left-radius: 7px;
-	         border-bottom-left-radius: 7px;
-	
         background-color: rgb(43,194,83);
 	background-image: -webkit-gradient(
 	  linear,
@@ -110,6 +114,20 @@
 	  inset 0 -2px 6px rgba(0,0,0,0.4);
 	position: relative;
 	overflow: hidden;
+}
+.rounded .meter > span { 
+    	   -webkit-border-top-right-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+	       -moz-border-radius-topright: 7px;
+	    -moz-border-radius-bottomright: 7px;
+	           border-top-right-radius: 7px;
+	        border-bottom-right-radius: 7px;
+	    -webkit-border-top-left-radius: 7px;
+	 -webkit-border-bottom-left-radius: 7px;
+	        -moz-border-radius-topleft: 7px;
+	     -moz-border-radius-bottomleft: 7px;
+	            border-top-left-radius: 7px;
+	         border-bottom-left-radius: 7px;
 }
 .xw-progressbar .orange > span {
 	background-color: #f1a165;
@@ -198,7 +216,11 @@
 	-moz-background-size:    50px 50px;
 	background-size:         50px 50px;
 	-webkit-animation: move 2s linear infinite;
-	   -webkit-border-top-right-radius: 7px;
+
+	overflow: hidden;
+}
+.rounded .meter > span.gradient:after {
+   	   -webkit-border-top-right-radius: 7px;
 	-webkit-border-bottom-right-radius: 7px;
 	       -moz-border-radius-topright: 7px;
 	    -moz-border-radius-bottomright: 7px;
@@ -209,6 +231,5 @@
 	        -moz-border-radius-topleft: 7px;
 	     -moz-border-radius-bottomleft: 7px;
 	            border-top-left-radius: 7px;
-	         border-bottom-left-radius: 7px;
-	overflow: hidden;
+	         border-bottom-left-radius: 7px; 
 }

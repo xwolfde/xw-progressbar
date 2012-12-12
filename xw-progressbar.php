@@ -14,12 +14,15 @@ License: GPL2
 /**
  * Define update URL
  */
-define("XW_PROGRESSBAR_URL", "http://blog.tokenbus.de/stand.txt");
+define("XW_PROGRESSBAR_URL", '');
 define("XW_PROGRESSBAR_CACHETIME", 30*60);
 define("XW_PROGRESSBAR_SUM", 1);
 define("XW_PROGRESSBAR_HTML5", 0);
 define("XW_PROGRESSBAR_DISPLAYNUMBER", 1);
-define("XW_PROGRESSBAR_COLOR", 'blue');
+define("XW_PROGRESSBAR_COLOR", 'green');
+define("XW_PROGRESSBAR_ROUNDED", 1);
+
+
 
 
 function xw_progressbar_init() {
@@ -60,7 +63,7 @@ function xw_progressbar_create($data,$attr) {
            $display_barcolor = $attr['color'];
         } 
         if (isset($attr['numbers'])) {
-           $displaynumber = $attr['numbers'];
+           $displaynumber = intval($attr['numbers']);
         } 
          if (isset($attr['unitstr'])) {
            $unit = $attr['unitstr'];
@@ -68,23 +71,29 @@ function xw_progressbar_create($data,$attr) {
             $unit = '';
         }
          if (isset($attr['html5'])) {
-            $htmltyp = 1;
-        } else {
-            $htmltyp = 0;
+            $htmltyp = intval($attr['html5']);       
+        }
+         if (isset($attr['rounded'])) {
+            $rounded = intval($attr['rounded']);       
         }
     }   
     if (!isset($display_sum)) $display_sum = XW_PROGRESSBAR_SUM;
     if (!isset($display_barcolor)) $display_barcolor = XW_PROGRESSBAR_COLOR;
     if (!isset($htmltyp)) $htmltyp = XW_PROGRESSBAR_HTML5;
     if (!isset($displaynumber)) $displaynumber = XW_PROGRESSBAR_DISPLAYNUMBER;    
+    if (!isset($rounded)) $rounded = XW_PROGRESSBAR_ROUNDED;    
     
     $result = '';
-    $result .=  "<div class=\"xw-progressbar\"";   
+    $result .=  "<div class=\"xw-progressbar";   
   
-    
+    if ((isset($rounded)) && ($rounded==1)) {
+        $result .=  " rounded";
+    }
+    $result .=  "\"";   
     if ((isset($attr['width'])) && (intval($attr['width'])>0)) {
         $result .=  " style=\"width: ".$attr['width']."\"";
     }
+    
     $result .=  ">";
         $summe = 0;
         $wert = 0;
@@ -206,6 +215,7 @@ function xw_progressbar_shortcode ($atts ) {
                 'numbers' => XW_PROGRESSBAR_DISPLAYNUMBER, // Show numbers  
                 'unitstr' => '',	// Optional Unit-String
                 'width'  => '',
+                'rounded' => XW_PROGRESSBAR_ROUNDED, // Show round corners and bars
         ), $atts ) );
         
        
@@ -250,7 +260,7 @@ class xw_progressbar_Widget extends WP_Widget {
              echo $before_title.$title.$after_title;
             
              $balken = xw_progressbar_getdata($url);
-             $html = xw_progressbar_create($balken); 
+             $html = xw_progressbar_create($balken,$instance); 
              echo $html;
 
             echo $after_widget;
@@ -272,6 +282,10 @@ class xw_progressbar_Widget extends WP_Widget {
                 $instance['url'] = strip_tags( $new_instance['url'] );
                 $instance['color'] = strip_tags( $new_instance['color'] );
                 $instance['unitstr'] = strip_tags( $new_instance['unitstr'] );
+                $instance['rounded'] = strip_tags( $new_instance['rounded'] );
+                $instance['total'] = strip_tags( $new_instance['total'] );
+                $instance['numbers'] = strip_tags( $new_instance['numbers'] );
+                $instance['html5'] = strip_tags( $new_instance['html5'] );
 		return $instance;
 	}
 
@@ -289,13 +303,34 @@ class xw_progressbar_Widget extends WP_Widget {
                 if ( isset( $instance[ 'url' ] ) ) {
 			$url = $instance[ 'url' ];
 		} else {
-			$url = '';
+			$url = XW_PROGRESSBAR_URL;
 		}
                 if ( isset( $instance[ 'unitstr' ] ) ) {
 			$unitstr = $instance[ 'unitstr' ];
 		} else {
 			$unitstr = '';
 		}
+                if ( isset( $instance[ 'color' ] ) ) {
+			$color = $instance[ 'color' ];		
+                } else {
+                    $color = XW_PROGRESSBAR_COLOR;
+                }
+                if ( isset( $instance[ 'rounded' ] ) ) {
+			$rounded = $instance[ 'rounded' ];
+		} 
+                if ( isset( $instance[ 'total' ] ) ) {
+			$total = $instance[ 'total' ];
+		} else {
+                    $total = XW_PROGRESSBAR_SUM;
+                }
+                if ( isset( $instance[ 'html5' ] ) ) {
+			$html5 = $instance[ 'html5' ];
+		}
+                 if ( isset( $instance[ 'numbers' ] ) ) {
+			$numbers = $instance[ 'numbers' ];
+		} else {
+                    $numbers = XW_PROGRESSBAR_DISPLAYNUMBER;
+                }
                 ?>
                  <p>
                 <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'xw_progressbar' ); ?></label> 
@@ -305,11 +340,58 @@ class xw_progressbar_Widget extends WP_Widget {
                 <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'xw_progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $url ); ?>" />
                 </p>
-                <p>
-                <label for="<?php echo $this->get_field_id( 'unitstr' ); ?>"><?php _e( 'Units:', 'xw_progressbar' ); ?></label> 
+               
+                <h5>Options</h5>
+                 <p>
+                <label for="<?php echo $this->get_field_id( 'unitstr' ); ?>"><?php _e( 'Text for Unit-Numbers:', 'xw_progressbar' ); ?></label> 
                 <input class="widefat" id="<?php echo $this->get_field_id( 'unitstr' ); ?>" name="<?php echo $this->get_field_name( 'unitstr' ); ?>" type="text" value="<?php echo esc_attr( $unitstr ); ?>" />
                 </p>
-                 <?php               
+                <p>
+                           
+                    <input id="<?php echo $this->get_field_id( 'rounded' ); ?>" 
+                            name="<?php echo $this->get_field_name( 'rounded' ); ?>" 
+                            type="checkbox" value="1" <?php echo checked($rounded,1,false ); ?> />
+                    <label for="<?php echo $this->get_field_id( 'rounded' ); ?>"><?php _e( 'Use rounded corners', 'xw_progressbar' ); ?></label> 
+                </p>
+                <p>        
+                     <input id="<?php echo $this->get_field_id( 'total' ); ?>" 
+                            name="<?php echo $this->get_field_name( 'total' ); ?>" 
+                            type="checkbox" value="1" <?php echo checked($total,1,false ); ?> />
+                    <label for="<?php echo $this->get_field_id( 'total' ); ?>"><?php _e( 'Show total bar', 'xw_progressbar' ); ?></label> 
+                </p>
+                 <p>        
+                     <input id="<?php echo $this->get_field_id( 'numbers' ); ?>" 
+                            name="<?php echo $this->get_field_name( 'numbers' ); ?>" 
+                            type="checkbox" value="1" <?php echo checked($numbers,1,false ); ?> />
+                    <label for="<?php echo $this->get_field_id( 'numbers' ); ?>"><?php _e( 'Show numbers', 'xw_progressbar' ); ?></label> 
+                </p>
+                <p>        
+                     <input id="<?php echo $this->get_field_id( 'html5' ); ?>" 
+                            name="<?php echo $this->get_field_name( 'html5' ); ?>" 
+                            type="checkbox" value="1" <?php echo checked($html5,1,false ); ?> />
+                    <label for="<?php echo $this->get_field_id( 'html5' ); ?>"><?php _e( 'Use HTML5 progress bars', 'xw_progressbar' ); ?></label> 
+                </p>
+                
+                <?php 
+                 echo "<select name=\"".$this->get_field_name( 'color' )."\">\n";
+                 $list = array("blue","orange","green","red");
+                 
+                foreach($list as $i) {   
+                    echo "\t\t\t\t";
+                    echo '<option value="'.$i.'"';
+                    if ( $i == $color ) {
+                        echo ' selected="selected"';
+                    }                                                                                                                                                                
+                    echo '>';
+                    echo $i;                        
+                    echo '</option>';                                                                                                                                                              
+                    echo "\n";                                            
+                }  
+                echo "</select>\n";                                   
+                echo "\t\t\t";
+                echo "<label for=\"".$this->get_field_name( 'color' )."\">".__( 'Color for bars', 'xw_progressbar' )."</label>\n"; 
+                
+                
 	}
  
         

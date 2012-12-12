@@ -1,8 +1,8 @@
 === xwolf Progress Bars ===
-Plugin URI: http://piratenkleider.xwolf.de/plugins/
+Plugin URI: https://github.com/xwolfde/xw-progressbar
 Description: Displays a textbox with progressbars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
-Version: 1.0
+Version: 1.0.1
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
@@ -27,10 +27,14 @@ updated.
    [progressbar url="http://some/url/data.csv"]
 
    Additional attributes:
-   * color 
-   * width 
-   * total (0/1)
-  
+
+    * color - set a color out of green, blue, red, orange
+    * unitstr - string to add a unit 
+    * rounded - make bars and box with rounded borders
+    * total - show total numbers
+    * numbers - show numbers of each bar
+    * html5 - use <progress>-tag instead of <div><span>..
+    
 
 
 === Syntax for data sources ===
