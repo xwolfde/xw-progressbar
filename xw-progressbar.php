@@ -4,7 +4,7 @@ Plugin Name: xwolf Progress Bar
 Plugin URI: http://piratenkleider.xwolf.de/plugins/
 Description: Displays a textbox with progressbars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
-Version: 1.1
+Version: 1.2
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
@@ -15,8 +15,8 @@ License: GPL2
  * Define update URL
  */
 define("XW_PROGRESSBAR_URL", '');
-define("XW_PROGRESSBAR_CACHETIME", 30*60);
-define("XW_PROGRESSBAR_SUM", 1);
+define("XW_PROGRESSBAR_CACHETIME", 30 * 60);
+define("XW_PROGRESSBAR_SUM", 0);
 define("XW_PROGRESSBAR_HTML5", 0);
 define("XW_PROGRESSBAR_DISPLAYNUMBER", 1);
 define("XW_PROGRESSBAR_COLOR", 'green');
@@ -116,16 +116,18 @@ function xw_progressbar_create($data,$attr) {
                 $parts[0] = strip_tags($parts[0]);
                 $result .=  "<h3>$parts[0]</h3>";
                 $parts[1] = floatval($parts[1]);
-                $parts[2] = intval($parts[2]);
+                $parts[2] = floatval($parts[2]);
                 
                 $number =  intval($parts[1]);
+                $barmax = intval($parts[2]);
                 $summe = $summe + $parts[2];
                 $wert = $wert + $parts[1];
                         
+                if ($barmax < $number) {$number=$barmax;}
                
                 if ($htmltyp==1) {
                      $result .=  "<div>";
-                    $result .= "<progress value=\"$number\" max=\"$parts[2]\"></progress>";
+                    $result .= "<progress value=\"$number\" max=\"$barmax\"></progress>";
                     if ($displaynumber==1) {
                         $result .=  "<span class=\"number\">$parts[1] / $parts[2] $unit</span>";
                     }
@@ -134,7 +136,7 @@ function xw_progressbar_create($data,$attr) {
                 } else {
                     if ($parts[2]==0) $parts[2]=1;                    
                     $percent = intval( ($parts[1] * 100) / $parts[2]);
-                    
+                    if ($percent>100) {$percent = 100;}
                     $result .= "<div class=\"meter";
                     if (isset($display_barcolor)) {
                        $result .= " $display_barcolor";
@@ -153,7 +155,7 @@ function xw_progressbar_create($data,$attr) {
         }
         if ($display_sum ==1) {
             $wertint = intval($wert);
-            
+            if ($wertint>$summe) { $wertint = $summe; }
             $result .=  "<div class=\"gesamt\">";
             $result .=  "<h3>".__( 'Total', 'xw-progressbar' )."</h3>";
             if ($htmltyp==1) {
@@ -164,6 +166,7 @@ function xw_progressbar_create($data,$attr) {
                 $result .=  "</div>";
             } else {
                 $percent = intval($wert * 100 / $summe);
+                if ($percent>100) {$percent = 100;}
                 $result .= "<div class=\"meter";
                     if (isset($display_barcolor)) {
                        $result .= " $display_barcolor";
@@ -292,7 +295,7 @@ class xw_progressbar_Widget extends WP_Widget {
 		$instance['title'] = strip_tags( $new_instance['title'] );
                 $instance['url'] = strip_tags( $new_instance['url'] );
                 $instance['color'] = strip_tags( $new_instance['color'] );
-                $instance['unitstr'] = strip_tags( $new_instance['unitstr'] );
+                $instance['unitstr'] = wp_filter_kses( $new_instance['unitstr'] );
                 $instance['rounded'] = strip_tags( $new_instance['rounded'] );
                 $instance['total'] = strip_tags( $new_instance['total'] );
                 $instance['numbers'] = strip_tags( $new_instance['numbers'] );
