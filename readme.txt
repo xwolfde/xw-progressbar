@@ -1,7 +1,7 @@
 === xwolf Progress Bar ===
 Plugin Name: xwolf Progress Bar
 Plugin URI: https://github.com/xwolfde/xw-progressbar
-Description: Displays a textbox with progressbars into a widget or a textbox. 
+Description: Displays a textbox with progress bars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
 Version: 1.2
 Author: xwolf
