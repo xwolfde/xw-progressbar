@@ -16,28 +16,38 @@ msgstr ""
 "Anzeige von einem oder mehreren Fortschrittsbalken auf Basis einer externen "
 "Datenquelle"
 
+#. Text in echo
+#: xw-progressbar.php:392
+msgid "No break between bars and numbers"
+msgstr "Balken und Werte auf einer Zeile"
+
+#. Text in echo
+#: xw-progressbar.php:364
+msgid "Optional Settings"
+msgstr "Optionale Einstellungen"
+
 #. Text in function
 #: xw-progressbar.php:1
 msgid "Progress Bar"
 msgstr "Fortschrittsbalken"
 
 #. Text in echo
-#: xw-progressbar.php:366
+#: xw-progressbar.php:386
 msgid "Show numbers"
 msgstr "Zeige Werte"
 
 #. Text in echo
-#: xw-progressbar.php:360
+#: xw-progressbar.php:380
 msgid "Show total bar"
 msgstr "Zeige Summe"
 
 #. Text in echo
-#: xw-progressbar.php:346
+#: xw-progressbar.php:366
 msgid "Text for Unit-Numbers:"
 msgstr "Anzeigetext für Einheiten"
 
 #. Text in echo
-#: xw-progressbar.php:336
+#: xw-progressbar.php:356
 msgid "Title:"
 msgstr "Titel"
 
@@ -47,21 +57,16 @@ msgid "Total"
 msgstr "Summe"
 
 #. Text in echo
-#: xw-progressbar.php:340
+#: xw-progressbar.php:360
 msgid "URL:"
 msgstr "URL:"
 
 #. Text in echo
-#: xw-progressbar.php:344
-msgid "Optional Settings"
-msgstr "Optionale Einstellungen"
-
-#. Text in echo
-#: xw-progressbar.php:372
+#: xw-progressbar.php:398
 msgid "Use HTML5 progress bars"
 msgstr "Verwende HTML5 Progress Tag"
 
 #. Text in echo
-#: xw-progressbar.php:354
+#: xw-progressbar.php:374
 msgid "Use rounded corners"
-msgstr "Runde Ecken"
+msgstr "Darstellung mit runden Ecken"
