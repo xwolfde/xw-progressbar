@@ -19,14 +19,13 @@ Displays one or more progress bars.
 All progress bars get data by an external source (URL) and will be automatically 
 updated.
 
-== Usage ==
-Use as widget
+= Use as widget =
 
 Simply add the progress bar widget to the sidebar you want to display it.
 Within the widget you can set a title and an URL and other optional settings.
 
 
-Use as shortcode within articles and pages
+= Use as shortcode within articles and pages =
 
 To use the progress bars add a shortcode like this:
 
@@ -43,7 +42,7 @@ Additional attributes:
 * html5 - use HTML5 progress-tag.
 
 
-==  Examples ==
+=  Examples =
 
 
 Default progress bar:
@@ -68,7 +67,7 @@ corners and make the numbers appear on a new line:
 
  
 
-Add a total bar
+Add a total bar 
 
 `[progressbar url="http://your.url/data.txt" 
     width="400px"  color="blue" rounded="0" numberbar="0" 
@@ -83,7 +82,7 @@ Display bars with HTML5-<progress> tag .
  
 
 
-== Syntax for data sources ==
+= Syntax for data sources =
 Syntax for the data-file on the URL is a character seperated file:
 Titel; Progressvalue; Maxvalue
 
