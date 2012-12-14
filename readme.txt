@@ -81,6 +81,7 @@ Display bars with HTML5-<progress> tag .
 `[progressbar url="http://your.url/data.txt" 
     html5="1" width="300px"]`
 
+
  
 
 
@@ -105,6 +106,19 @@ Note: Data from external sources will be cached once they was got by
 30 minutes.  
 
 
+= Language support =
+
+This plugin comes along with german language files.
+
+
+= Support =
+* By [Flattr](https://flattr.com/donation/give/to/xwolf)
+
+= Autor ==
+* [Google+](https://plus.google.com/u/0/110052848631728627228/ "Google+")
+* [Twitter](https://twitter.com/xwolf "Twitter")
+
+
 == Screenshots ==
 
 1. Default view of progress bars within a article or page
@@ -123,12 +137,6 @@ widget with another background color.
 2. Upload to your blog into directory "/wp-content/plugins/"
 3. Activate within the plugin-section of wordpress backend
 
-= Support =
-* Per [Flattr](https://flattr.com/donation/give/to/xwolf)
-
-= Autor =
-* [Google+](https://plus.google.com/u/0/110052848631728627228/ "Google+")
-* [Twitter](https://twitter.com/xwolf "Twitter")
 
 
  == Upgrade Notice == 
