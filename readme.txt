@@ -1,8 +1,7 @@
 === xwolf Progress Bar ===
 Plugin Name: xwolf Progress Bar
 Plugin URI: https://github.com/xwolfde/xw-progressbar
-Description: Displays a textbox with progress bars into a widget or a textbox. 
-Content for those bars will get by a simple csv-file on a given URL. 
+Donate link: https://flattr.com/donation/give/to/xwolf
 Version: 1.2
 Author: xwolf
 Author URI: http://blog.xwolf.de
@@ -12,6 +11,9 @@ Tags: statictics, progress, data, widget
 Requires at least: 3.3
 Tested up to: 3.5
 Stable tag: trunk
+
+Displays a textbox with progress bars into a widget or a textbox. 
+Content for those bars will get by a simple csv-file on a given URL. 
 
 == Description ==
 
@@ -120,6 +122,14 @@ widget with another background color.
 1. Download ZIP-file
 2. Upload to your blog into directory "/wp-content/plugins/"
 3. Activate within the plugin-section of wordpress backend
+
+= Support =
+* Per [Flattr](https://flattr.com/donation/give/to/xwolf)
+
+= Autor =
+* [Google+](https://plus.google.com/u/0/110052848631728627228/ "Google+")
+* [Twitter](https://twitter.com/xwolf "Twitter")
+
 
  == Upgrade Notice == 
 
