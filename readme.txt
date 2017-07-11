@@ -2,14 +2,14 @@
 Plugin Name: xwolf Progress Bar
 Plugin URI: https://github.com/xwolfde/xw-progressbar
 Donate link: https://flattr.com/donation/give/to/xwolf
-Version: 1.2
+Version: 1.3
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: statictics, progress, data, widget
 Requires at least: 3.3
-Tested up to: 3.5
+Tested up to: 4.8
 Stable tag: trunk
 
 Displays a textbox with progress bars into a widget or a textbox. 
@@ -141,4 +141,4 @@ widget with another background color.
 
  == Upgrade Notice == 
 
-First release version.
+Needs PHP 5.6 or higher.

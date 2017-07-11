@@ -2,9 +2,10 @@
 /*
 Plugin Name: xwolf Progress Bar
 Plugin URI: http://piratenkleider.xwolf.de/plugins/
+Plugin GitHub URI: https://github.com/xwolfde/xw-progressbar
 Description: Displays a textbox with progressbars into a widget or a textbox. 
 Content for those bars will get by a simple csv-file on a given URL. 
-Version: 1.2
+Version: 1.3
 Author: xwolf
 Author URI: http://blog.xwolf.de
 License: GPL2
@@ -28,7 +29,7 @@ define("XW_PROGRESSBAR_NUMBERBAR",1);
 function xw_progressbar_init() {
 	$xw_progressbar_path = plugin_dir_url( __FILE__ );
 	if ( !is_admin() ) { // don't load this if we're in the backend
-		wp_register_style( 'xw_progressbar_css', $xw_progressbar_path . 'css/xw_progressbar.css' );
+		wp_register_style( 'xw_progressbar_css', $xw_progressbar_path . 'css/progressbar.css' );
 		wp_enqueue_style( 'xw_progressbar_css' );
 	}
         load_plugin_textdomain('xw-progressbar', '', dirname(plugin_basename(__FILE__)) . '/lang' ); 
@@ -201,7 +202,7 @@ function xw_progressbar_getdata($url = XW_PROGRESSBAR_URL) {
         if ( false == is_wp_error( $response ) && 200 == $response['response']['code'] && isset( $response['body'] ) ):	
                 $thisstring =  $response['body'];
                 if ( seems_utf8( $thisstring ) == false ) $thisstring = utf8_encode( $thisstring );
-                $balken =  split("[\n\r]",$thisstring);               
+                $balken =  preg_split("/[\n\r]/",$thisstring);               
                 if (is_array($balken)) {
                     $cacheddata = $balken;                                       
                     $lastcheck = time();
