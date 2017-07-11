@@ -1,7 +1,6 @@
 === xwolf Progress Bar ===
 Plugin Name: xwolf Progress Bar
 Plugin URI: https://github.com/xwolfde/xw-progressbar
-Donate link: https://flattr.com/donation/give/to/xwolf
 Version: 1.3
 Author: xwolf
 Author URI: http://blog.xwolf.de
